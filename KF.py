@@ -39,9 +39,9 @@ class KalmanFilter:
 
 	def getPrediction(self):
 		return self.x, self.P
-	
+
 	def getInnovation(self):
-		return self.innovation	
+		return self.innovation, self.S	
 
 	def update(self, z):
 		
