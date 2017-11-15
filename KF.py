@@ -5,31 +5,31 @@ class KalmanFilter:
 
 	def __init__(self):
 		#Parameters
-		self.F=None
-		self.B=None
-		self.Q=None
-		self.H=None
-		self.R=None
+		self.F=None#State-transition model
+		self.B=None#Control-model
+		self.Q=None#Process-noise covariance
+		self.H=None#Observation model
+		self.R=None#Output noise covariance
 		#Outputs
-		self.P=None
-		self.x=None
+		self.P=None#Prediction covariance matrix
+		self.x=None#Prediction
 		self.innovation=None
 		self.residual=None
-		self.y=None
+		self.y=None#Observed vector
 		self.S=None
 	def __init__(self, F, B, Q, H, R, P, x):
 
-		self.F=F
-		self.B=B
-		self.Q=Q
-		self.H=H
-		self.R=R
+		self.F=F#State-transition model
+		self.B=B#Control-model
+		self.Q=Q#Process-noise covariance
+		self.H=H#Observation model
+		self.R=R#Output noise covariance
 		#Outputs
-		self.P=P
-		self.x=x
+		self.P=P#Prediction covariance matrix
+		self.x=x#Prediction
 		self.innovation=np.zeros(np.shape(x))
 		self.residual=np.zeros(np.shape(x))
-		self.y=np.zeros(np.shape(x))
+		self.y=np.zeros(np.shape(x))#Observed vector
 		self.S=np.zeros(np.shape(R))
 
 	def predict(self, u):
