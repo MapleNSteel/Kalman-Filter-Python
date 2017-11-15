@@ -38,8 +38,10 @@ class KalmanFilter:
 		self.P=(self.F.dot(self.P)).dot(self.F.transpose())+self.Q
 
 	def getPrediction(self):
-		
 		return self.x, self.P
+	
+	def getInnovation(self):
+		return self.innovation	
 
 	def update(self, z):
 		
