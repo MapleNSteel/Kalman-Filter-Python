@@ -3,12 +3,14 @@ from numpy.random import random
 import matplotlib.pyplot as plt
 from KF import KalmanFilter
 
+def h(x):
+	return x
+
 def main():
 
 	deltaTime=0.001
 	numSteps=500
 
-	x_0=np.array([[0],[0]])
 	F=np.array([[1, 0],[0, 1]])*0
 	B=np.array([[1, 0],[0, 1]])
 	H=np.array([[1, 0],[0, 1]])
@@ -27,19 +29,19 @@ def main():
 	p_n=np.reshape(np.random.multivariate_normal([0, 0],[[p_sigma,0],[0,p_sigma]],numSteps),(2,numSteps))
 	o_n=np.reshape(np.random.multivariate_normal([0, 0],[[o_sigma,0],[0,o_sigma]],numSteps),(2,numSteps))
 
-	x=np.zeros((2,numSteps))
-	y=np.zeros((2,numSteps))
+	x=np.zeros((2,numSteps))#process output
+	y=np.zeros((2,numSteps))#process output
 	x_pred=np.zeros((2,numSteps))
 
 	KF=KalmanFilter(F,B,Q,H,R,P,x[0:,0])
 
 	for t in range(1,numSteps):
-		x[0:,t]=F.dot(x[0:,t-1])+B.dot(i[0:,t])+p_n[0:,t]
+		x[0:,t]=B.dot(i[0:,t])+p_n[0:,t]#process output with process noise
 		KF.predict(i[0:,t])
-		x_pred[0:,t],P=KF.getPrediction()
+		x_pred[0:,t],P=KF.getPrediction()#predicting next process state
 		#print(P)
-		y[0:,t]=H.dot(x[0:,t])+o_n[0:,t]
-		KF.update(y[0:,t])
+		y[0:,t]=h(x[0:,t])+o_n[0:,t]#sensor output
+		KF.update(y[0:,t])#update Kalman
 	
 	print(np.sum((y-x_pred)**2)/numSteps)
 	print(np.sum((x-x_pred)**2)/numSteps)
