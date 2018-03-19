@@ -1,6 +1,6 @@
 import numpy as np
 from numpy import linalg as linalg
-from KF import KalmanFilter
+from KalmanFilters.KF import KalmanFilter
 
 class ExtendedKalmanFilter(KalmanFilter):
 
